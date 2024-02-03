@@ -15,8 +15,10 @@ function App() {
         email,
         name: { last, first, title },
       } = response.data.results[0];
+      const data = { name: `${title} ${first} ${last}`, email };
+      localStorage.setItem("userData", JSON.stringify(data));
 
-      setUserData({ name: `${title} ${first} ${last}`, email });
+      setUserData(data);
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
@@ -31,18 +33,18 @@ function App() {
   }, []);
 
   return (
-    <div
-      // style={{ display: "flex", justifyContent: "center" }}
-      className='flex items-center justify-center w-auto  '
-    >
+    <div className='flex items-center justify-center w-auto  '>
       <div className='mt-48 border border-slate-950 bg-white '>
         <div className='m-10 mt-28  h-[200px]  text-center bg-white'>
           <p className='text-lg font-semibold bg-white'>
-            Name: {userData?.name}
+            <span className='font-bold bg-inherit'>NAME:</span> {userData?.name}
           </p>
-          <p className='text-lg bg-white'>Email: {userData?.email}</p>
+          <p className='text-lg font-semibold bg-white'>
+            <span className='font-bold bg-inherit'> EMAIL: </span>
+            {userData?.email}
+          </p>
           <button
-            className=' mx-[230px]  mt-8 ml-[185px] bg-amber-400 w-24  rounded-md '
+            className=' mx-[230px]  mt-8 ml-[185px] bg-blue-400 w-24  rounded-md  '
             onClick={refreshUserData}
           >
             Refresh
